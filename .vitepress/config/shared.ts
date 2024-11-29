@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress';
-import aiscriptTmLanguage from 'aiscript-vscode/aiscript/syntaxes/aiscript.tmLanguage.json' assert { type: 'json' };
+import aiscriptTmLanguage from 'aiscript-vscode/aiscript/syntaxes/aiscript.tmLanguage.json' with { type: 'json' };
 import { createPlaygroundTransformer } from '../scripts/playground-transformer';
 
 // https://vitepress.dev/reference/site-config
