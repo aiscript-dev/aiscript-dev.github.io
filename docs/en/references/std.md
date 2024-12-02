@@ -28,10 +28,10 @@ Accepts string input.
 Type: `str`  
 Version of AiScript runtime that's currently running.  
 
-#### @Core:type(_v_: value): str
+#### @Core:type(_v_: any): str
 Get the type name of the value.  
 
-#### @Core:to_str(_v_: value): str
+#### @Core:to_str(_v_: any): str
 Obtains a string representing a value.  
 
 #### @Core:sleep(_time_: num): void
@@ -45,10 +45,10 @@ Aborts the execution.
 Generates new UUID.
 
 ### :: Json
-#### @Json:stringify(_v_: value): str
+#### @Json:stringify(_v_: any): str
 Generate JSON string.
 
-#### @Json:parse(_json_: str): value
+#### @Json:parse&lt;T&gt;(_json_: str): T
 Parse JSON into object. Returns an error type value (`name`=`'not_json'`) if the argument is not parsable as JSON. 
 
 #### @Json:parsable(_str_: str): bool
@@ -153,37 +153,37 @@ Escape sequences corresponding to the following characters are not decoded:
 Returns a string that decodes encoded_text as an encoded URI component.  
 
 ### :: Arr
-#### @Arr:create(_length_: num, _initial_?: value): arr
+#### @Arr:create&lt;T&gt;(_length_: num, _initial_?: T): arr&lt;T&gt;
 Creates an array of length `length`.  
 The array will be filled with _initial_ if given, otherwise with `null`.  
 
 ### :: Obj
 #### @Obj:keys(_v_: obj): arr
-#### @Obj:vals(_v_: obj): arr
+#### @Obj:vals&lt;T&gt;(_v_: obj&lt;T&gt;): arr&lt;T&gt;
 #### @Obj:kvs(_v_: obj): arr
 Returns an array of object keys, values, and key/value pairs.
 
-#### @Obj:get(_v_: obj, _key_: str): value
+#### @Obj:get&lt;T&gt;(_v_: obj&lt;T&gt;, _key_: str): T
 
-#### @Obj:set(_v_: obj, _key_: str, _val_: value): null
+#### @Obj:set&lt;T&gt;(_v_: obj&lt;T&gt;, _key_: str, _val_: T): null
 
 #### @Obj:has(_v_: obj, _key_: str): bool
 
-#### @Obj:copy(_v_: obj): obj
+#### @Obj:copy&lt;T&gt;(_v_: obj&lt;T&gt;): obj&lt;T&gt;
 Generates the copy of the object.
 
-#### @Obj:merge(_o1_: obj, _o2_: obj): obj
+#### @Obj:merge&lt;T&gt;(_o1_: obj&lt;T&gt;, _o2_: obj&lt;T&gt;): obj&lt;T&gt;
 Returns a merged version of the two objects.
 
 ### :: Error
-#### @Error:create(_name_: str, _info_?: value): error
+#### @Error:create(_name_: str, _info_?: any): error
 Create error type value.
 
 ### :: Async
-#### @Async:interval(_interval_: num, _callback_: fn, _immediate_?: bool): fn
+#### @Async:interval(_interval_: num, _callback_: @() => any, _immediate_?: bool): @() => void
 Calls the callback function at the specified period.  
 Returns a stop function.  
 
-#### @Async:timeout(_delay_: num, _callback_: fn):
+#### @Async:timeout(_delay_: num, _callback_: @() => any): @() => void
 Calls the callback function after the specified time has elapsed.  
 Returns a stop function as the return value.  
