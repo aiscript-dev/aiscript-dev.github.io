@@ -27,10 +27,10 @@ standardを省略してstd定数/関数とも呼ばれています。
 型: `str`  
 AiScriptのバージョンです。  
 
-#### @Core:type(_v_: value): str
+#### @Core:type(_v_: any): str
 値の型名を取得します。  
 
-#### @Core:to_str(_v_: value): str
+#### @Core:to_str(_v_: any): str
 値を表す文字列を取得します。  
 
 #### @Core:sleep(_time_: num): void
@@ -44,10 +44,10 @@ AiScriptのバージョンです。
 新しいUUIDを生成します。  
 
 ### :: Json
-#### @Json:stringify(_v_: value): str
+#### @Json:stringify(_v_: any): str
 JSONを生成します。  
 
-#### @Json:parse(_json_: str): value
+#### @Json:parse&lt;T&gt;(_json_: str): T
 JSONをパースします。 引数がJSONとしてパース可能性でない場合、エラー型の値（`name`=`'not_json'`）を返します。 
 
 #### @Json:parsable(_str_: str): bool
@@ -155,37 +155,37 @@ encoded_uri をエンコードされたURIとしてデコードした文字列�
 encoded_text をエンコードされたURI構成要素としてデコードした文字列を返します。  
 
 ### :: Arr
-#### @Arr:create(_length_: num, _initial_?: value): arr
+#### @Arr:create&lt;T&gt;(_length_: num, _initial_?: T): arr&lt;T&gt;
 長さが`length`の配列を作成します。  
 配列は _initial_ が与えられていれば _initial_ 、でなければ`null`で埋められます。  
 
 ### :: Obj
 #### @Obj:keys(_v_: obj): arr
-#### @Obj:vals(_v_: obj): arr
+#### @Obj:vals&lt;T&gt;(_v_: obj&lt;T&gt;): arr&lt;T&gt;
 #### @Obj:kvs(_v_: obj): arr
 オブジェクトのキー、値、キーと値の組を配列にして返します。
 
-#### @Obj:get(_v_: obj, _key_: str): value
+#### @Obj:get&lt;T&gt;(_v_: obj&lt;T&gt;, _key_: str): T
 
-#### @Obj:set(_v_: obj, _key_: str, _val_: value): null
+#### @Obj:set&lt;T&gt;(_v_: obj&lt;T&gt;, _key_: str, _val_: T): null
 
 #### @Obj:has(_v_: obj, _key_: str): bool
 
-#### @Obj:copy(_v_: obj): obj
+#### @Obj:copy&lt;T&gt;(_v_: obj&lt;T&gt;): obj&lt;T&gt;
 オブジェクトのコピーを生成します。  
 
-#### @Obj:merge(_o1_: obj, _o2_: obj): obj
+#### @Obj:merge&lt;T&gt;(_o1_: obj&lt;T&gt;, _o2_: obj&lt;T&gt;): obj&lt;T&gt;
 ２つのオブジェクトを併合したものを返します。
 
 ### :: Error
-#### @Error:create(_name_: str, _info_?: value): error
+#### @Error:create(_name_: str, _info_?: any): error
 エラー型の値を作成します。
 
 ### :: Async
-#### @Async:interval(_interval_: num, _callback_: fn, _immediate_?: bool): fn
+#### @Async:interval(_interval_: num, _callback_: @() => any, _immediate_?: bool): @() => void
 指定した周期でコールバック関数を呼び出します。  
 戻り値として停止関数を返します。  
 
-#### @Async:timeout(_delay_: num, _callback_: fn):
+#### @Async:timeout(_delay_: num, _callback_: @() => any): @() => void
 指定した時間経過後にコールバック関数を呼び出します。  
 戻り値として停止関数を返します。  

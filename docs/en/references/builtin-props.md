@@ -55,28 +55,28 @@ let y = "abc"
 <: y.to_num()
 ```
 
-### @(_v_: str).to_arr(): `arr<str>`
+### @(_v_: str).to_arr(): arr&lt;str&gt;
 Splits the string into an array of grapheme clusters.  
 If the string contains no isolated surrogates, they are not returned.  
 
-### @(_v_: str).to_unicode_arr(): `arr<str>`
+### @(_v_: str).to_unicode_arr(): arr&lt;str&gt;
 Splits the string into an array of Unicode code points.  
 Grapheme clusters are divided.  
 If the string contains no isolated surrogates, they are not returned.  
 
-### @(_v_: str).to_unicode_codepoint_arr(): `arr<num>`
+### @(_v_: str).to_unicode_codepoint_arr(): arr&lt;num&gt;
 Splits the string into Unicode code points and returns their numeric values as an array.  
 If the string contains no isolated surrogates, they are not returned.  
 
-### @(_v_: str).to_char_arr(): `arr<str>`
+### @(_v_: str).to_char_arr(): arr&lt;str&gt;
 Splits the string into an array of UTF-16 code units.  
 If the string contains surrogate pairs, both the high and low surrogates are returned separately.  
 
-### @(_v_: str).to_charcode_arr(): `arr<num>`
+### @(_v_: str).to_charcode_arr(): arr&lt;num&gt;
 Splits the string into UTF-16 code units and returns their numeric values as an array.  
 If the string contains surrogate pairs, both the high and low surrogates are returned separately.  
 
-### @(_v_: str).to_utf8_byte_arr(): `arr<num>`
+### @(_v_: str).to_utf8_byte_arr(): arr&lt;num&gt;
 Encodes the string into UTF-8 and returns an array of byte values (0–255).  
 
 ### @(_v_: str).pick(_i_: num): str | null
@@ -127,7 +127,7 @@ let x = "Hello World!"
 <: x.slice(6, 11)
 ```
 
-### @(_v_: str).split(_splitter_?: str): `arr<str>`
+### @(_v_: str).split(_splitter_?: str): arr&lt;str&gt;
 Splits the string into an array based on the delimiter _splitter_. If _splitter_ is omitted, splits the string into individual characters.  
 ```aiscript playground
 let x = "Hey, how are you?"
@@ -152,7 +152,7 @@ let x = [1, 2, 3, 4, 5]
 <: x.len
 ```
 
-### @(_v_: arr).at(_index_: num, _otherwise_?: value): value  
+### @(_v_: arr&lt;T&gt;).at(_index_: num, _otherwise_?: T): T | null
 Returns the element at the position _index_ in the array.\
 If _index_ is negative, it counts from the end.\
 If _index_ is out of range, it returns _otherwise_ instead.\
@@ -167,7 +167,7 @@ let x = [1, 2, 3, 4, 5]
 <: x.at(5, "Not Found")
 ```
 
-### @(_v_: arr).push(_i_: value): null  
+### @(_v_: arr&lt;T&gt;).push(_i_: T): null  
 **【This operation mutates the array】**  
 Adds an element to the end of the array.  
 
@@ -178,7 +178,7 @@ x.push(8)
 <: x
 ```
 
-### @(_v_: arr).unshift(i: value): null  
+### @(_v_: arr&lt;T&gt;).unshift(i: T): null  
 **【This operation mutates the array】**  
 Adds an element to the beginning of the array.  
 
@@ -189,7 +189,7 @@ x.unshift(7)
 <: x
 ```
 
-### @(_v_: arr).pop(): value  
+### @(_v_: arr&lt;T&gt;).pop(): T | null
 **【This operation mutates the array】**  
 Removes and returns the last element of the array.  
 
@@ -201,7 +201,7 @@ let popped = x.pop()
 <: x
 ```
 
-### @(_v_: arr).shift(): value  
+### @(_v_: arr&lt;T&gt;).shift(): T | null
 **【This operation mutates the array】**  
 Removes and returns the first element of the array.  
 
@@ -213,7 +213,7 @@ let shifted = x.shift()
 <: x
 ```
 
-### @(_a_: arr).concat(_b_: arr): arr  
+### @(_a_: arr&lt;T&gt;).concat(_b_: arr&lt;T&gt;): arr&lt;T&gt;
 Concatenates two arrays.  
 
 ```aiscript playground
@@ -239,7 +239,7 @@ let x = ["Hello", "World", "!"]
 <: x.join()
 ```
 
-### @(_v_: arr).slice(_begin_: num, _end_: num): arr  
+### @(_v_: arr&lt;T&gt;).slice(_begin_: num, _end_: num): arr&lt;T&gt;
 Extracts a section of the array from _begin_ to _end_.  
 
 ```aiscript playground
@@ -248,7 +248,7 @@ let x = [1, 2, 3, 4, 5]
 <: x.slice(1, 4)
 ```
 
-### @(_v_: arr).incl(_i_: value): bool  
+### @(_v_: arr&lt;T&gt;).incl(_i_: T): bool  
 Returns whether the specified value is present in the array.  
 
 ```aiscript playground
@@ -258,7 +258,7 @@ let x = [1, 2, 3, 4, 5]
 <: x.incl(6)
 ```
 
-### @(_v_: arr).map(_func_: fn): arr  
+### @(_v_: arr&lt;U&gt;).map(_func_: @(T, num) =&gt; U): arr&lt;U&gt;
 Asynchronously calls _func_ on each element of the array.\
 Returns a new array with elements replaced by the results of _func_.  
 
@@ -270,7 +270,7 @@ let x = ['Tanaka', 'Suzuki', 'Yamamoto']
 })
 ```
 
-### @(_v_: arr).filter(_func_: fn): arr  
+### @(_v_: arr&lt;T&gt;).filter(_func_: @(T, num) =&gt; bool): arr&lt;T&gt;
 Extracts elements from the array where _func_ returns true.\
 The order is preserved.  
 
@@ -283,8 +283,8 @@ let x = [1, 2, 3, 4, 5]
 })
 ```
 
-### @(_v_: arr).reduce(_func_: Callback, _initial_: value): value
-`Callback`: @(_acm_: value, _item_: value, _index_: num): value  
+### @(_v_: arr&lt;T&gt;).reduce&lt;U&gt;(_func_: Callback, _initial_: U): U
+`Callback`: @(_acm_: U, _item_: T, _index_: num): U  
 Calls _func_ for each element of the array in turn.  
 In each call, the previous result is passed as the first argument _acm_.  
 If _initial_ is specified, the argument of the first call is (_initial_, _v_\[0], 0),  
@@ -300,7 +300,7 @@ let x = [1, 2, 3, 4, 5]
 }, 0)
 ```
 
-### @(_v_: arr).find(_func_: @(_item_: value, _index_: num) { bool }): value
+### @(_v_: arr&lt;T&gt;).find(_func_: @(_item_: T, _index_: num) =&gt; bool ): T | null
 Find the first element in the array such that _func_ returns true and returns their values.
 
 ```aiscript playground
@@ -312,7 +312,7 @@ let x = [1, 2, 3, 4, 5]
 })
 ```
 
-### @(_v_: arr).index_of(_val_: value, _fromIndex_?: num): num
+### @(_v_: arr&lt;T&gt;).index_of(_val_: T, _fromIndex_?: num): num
 Searches the array for a value equal to _val_ and returns its index.  
 If _fromIndex_ is specified, the search starts at that position.  
 If _fromIndex_ is negative, the position from the end (array length + _fromIndex_) is used.  
@@ -336,7 +336,7 @@ x.reverse()
 <: x
 ```
 
-### @(_v_: arr).copy(): arr
+### @(_v_: arr&lt;T&gt;).copy(): arr&lt;T&gt;
 Generates a copy of the array.  
 It is a shallow copy, and array and object references are preserved.  
 
@@ -353,7 +353,7 @@ xCopy.push(6)
 <: xCopy
 ```
 
-### @(_v_: arr).sort(_comp_: @(_a_: value, _b_: value)): arr
+### @(_v_: arr&lt;T&gt;).sort(_comp_: @(_a_: T, _b_: T) => num): arr&lt;T&gt;
 **【This operation mutates the array】**  
 Sort an array. Pass the following comparison function as the first argument _comp_.  
 This operation is stable sort.
@@ -380,7 +380,7 @@ x.sort(@(a, b) {
 <: x
 ```
 
-### @(_v_: arr).fill(_val_?: value, _fromIndex_?: num, _toIndex_?: num): arr
+### @(_v_: arr&lt;T&gt;).fill(_val_?: T, _fromIndex_?: num, _toIndex_?: num): arr&lt;T&gt;
 **【This operation mutates the array】**  
 Replaces elements in the range _fromIndex_ to _toIndex_ of the array with _val_.  
 If _val_ is omitted, it is replaced with `null`.  
@@ -395,7 +395,7 @@ x.fill(0, 1, 4)
 <: x
 ```
 
-### @(_v_: arr).repeat(_times_: num): arr
+### @(_v_: arr&lt;T&gt;).repeat(_times_: num): arr&lt;T&gt;
 Creates an array repeated _times_ times.  
 Like `arr.copy`, it is a shallow copy, and array and object references are preserved.  
 _times_ must be an integer value greater than or equal to 0. Otherwise, throws error.
@@ -406,7 +406,7 @@ let x = [1, 2, 3]
 <: x.repeat(3)
 ```
 
-### @(_v_: arr).splice(_index_: num, _remove_count_?: num, _items_?: arr\&lt;value&gt;): arr\&lt;value&gt;
+### @(_v_: arr&lt;T&gt;).splice(_index_: num, _remove_count_?: num, _items_?: arr&lt;T&gt;): arr&lt;T&gt;
 **【This operation mutates the array】**  
 Removes _remove_count_ elements from the _index_ array and inserts _items_ elements in their place.  
 Returns an array of the elements removed as the return value.
@@ -436,7 +436,7 @@ let x = [1, [2, 3], [4, [5, 6]]]
 <: x.flat(2)
 ```
 
-### @(_v_: arr).flat_map(_func_: @(_item_: value, _index_: num) { value }): arr
+### @(_v_: arr&lt;T&gt;).flat_map&lt;U&gt;(_func_: @(_item_: T, _index_: num) =&gt; arr&lt;U&gt; | U ): arr&lt;U&gt;
 After replacing each element of the array with the return value of _func_, a new array is created, flattened by one level.  
 _func_ is called asynchronously.
 
@@ -448,7 +448,7 @@ let x = [1, 2, 3]
 })
 ```
 
-### @(_v_: arr).insert(_index_: num, _item_: value): null
+### @(_v_: arr&lt;T&gt;).insert(_index_: num, _item_: T): null
 **【This operation mutates the array】**  
 Inserts _item_ at the _index_ position in the array.  
 If _index_ is negative, count from the end.  
@@ -463,7 +463,7 @@ x.insert(2, 6)
 <: x
 ```
 
-### @(_v_: arr).remove(_index_: num): value | null
+### @(_v_: arr&lt;T&gt;).remove(_index_: num): T | null
 **【This operation mutates the array】**  
 Removes the element at position _index_ from the array and returns that element.  
 If _index_ is negative, count from the end.  
@@ -479,7 +479,7 @@ let removed = x.remove(2)
 <: x
 ```
 
-### @(_v_: arr).every(_func_: @(_item_: value, _index_: num) { bool }): bool
+### @(_v_: arr&lt;T&gt;).every(_func_: @(_item_: T, _index_: num) =&gt; bool ): bool
 Returns true only if _func_ returns true for all elements of the array. Always returns true for an empty array.
 
 ```aiscript playground
@@ -498,7 +498,7 @@ let y = [2, 4, 6, 7, 8]
 <: judgeAllEven(y)
 ```
 
-### @(_v_: arr).some(_func_: @(_item_: value, _index_: num) { bool }): bool
+### @(_v_: arr&lt;T&gt;).some(_func_: @(_item_: T, _index_: num) =&gt; bool): bool
 Returns true only when there is an element for which _func_ returns true for an array element.
 
 ```aiscript playground

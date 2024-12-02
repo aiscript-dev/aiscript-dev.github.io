@@ -59,28 +59,28 @@ let y = "abc"
 <: y.to_num()
 ```
 
-### @(_v_: str).to_arr(): `arr<str>`
+### @(_v_: str).to_arr(): arr&lt;str&gt;
 文字列を書記素クラスタ毎に区切り、配列にしたものを返します。  
 文字列に孤立サロゲートが含まれない場合、孤立サロゲートを返すことはありません。  
 
-### @(_v_: str).to_unicode_arr(): `arr<str>`
+### @(_v_: str).to_unicode_arr(): arr&lt;str&gt;
 文字列を Unicode コードポイント毎に区切り、配列にしたものを返します。  
 書記素クラスタは分割されます。  
 文字列に孤立サロゲートが含まれない場合、孤立サロゲートを返すことはありません。  
 
-### @(_v_: str).to_unicode_codepoint_arr(): `arr<num>`
+### @(_v_: str).to_unicode_codepoint_arr(): arr&lt;num&gt;
 文字列を Unicode コードポイント毎に区切り、それぞれ[コードポイント](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt)値を取得し配列にしたものを返します。  
 文字列に孤立サロゲートが含まれない場合、孤立サロゲートを返すことはありません。  
 
-### @(_v_: str).to_char_arr(): `arr<str>`
+### @(_v_: str).to_char_arr(): arr&lt;str&gt;
 文字列を UTF-16 コード単位毎に区切り、配列にしたものを返します。  
 文字列にサロゲートペアが含まれる場合、上位と下位それぞれ孤立サロゲートを返します。
 
-### @(_v_: str).to_charcode_arr(): `arr<num>`
+### @(_v_: str).to_charcode_arr(): arr&lt;num&gt;
 文字列を UTF-16 コード単位毎に区切り、それぞれ[UTF-16 コード単位を表す `0` から `65535` までの整数](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt)を取得し配列にしたものを返します。  
 文字列にサロゲートペアが含まれる場合、上位と下位それぞれ孤立サロゲートを返します。
 
-### @(_v_: str).to_utf8_byte_arr(): `arr<num>`
+### @(_v_: str).to_utf8_byte_arr(): arr&lt;num&gt;
 文字列を UTF-8 エンコードし、各バイト毎の `0` から `255` までの整数値を取得し配列にしたものを返します。  
 
 ### @(_v_: str).pick(_i_: num): str | null
@@ -245,7 +245,7 @@ let x = [1, 2, 3, 4, 5]
 <: x.len
 ```
 
-### @(_v_: arr).at(_index_: num, _otherwise_?: value): value
+### @(_v_: arr&lt;T&gt;).at(_index_: num, _otherwise_?: T): T | null
 配列の _index_ の位置の要素を返します。\
 _index_ が負の場合は末尾から数えます。\
 _index_ が範囲外の場合は、代わりに _otherwise_ を返します。\
@@ -260,7 +260,7 @@ let x = [1, 2, 3, 4, 5]
 <: x.at(5, "Not Found")
 ```
 
-### @(_v_: arr).push(_i_: value): null
+### @(_v_: arr&lt;T&gt;).push(_i_: T): null
 **【この操作は配列を書き換えます】**  
 配列の最後に要素を追加します。
 
@@ -271,7 +271,7 @@ x.push(8)
 <: x
 ```
 
-### @(_v_: arr).unshift(i: value): null
+### @(_v_: arr&lt;T&gt;).unshift(i: T): null
 **【この操作は配列を書き換えます】**  
 配列の最初に要素を追加します。
 
@@ -282,7 +282,7 @@ x.unshift(7)
 <: x
 ```
 
-### @(_v_: arr).pop(): value
+### @(_v_: arr&lt;T&gt;).pop(): T | null
 **【この操作は配列を書き換えます】**  
 配列の最後の要素を取り出します。
 
@@ -294,7 +294,7 @@ let popped = x.pop()
 <: x
 ```
 
-### @(_v_: arr).shift(): value
+### @(_v_: arr&lt;T&gt;).shift(): T | null
 **【この操作は配列を書き換えます】**  
 配列の最初の要素を取り出します。  
 
@@ -306,7 +306,7 @@ let shifted = x.shift()
 <: x
 ```
 
-### @(_a_: arr).concat(_b_: arr): arr
+### @(_a_: arr&lt;T&gt;).concat(_b_: arr&lt;T&gt;): arr&lt;T&gt;
 配列を連結します。
 
 ```aiscript playground
@@ -332,7 +332,7 @@ let x = ["Hello", "World", "!"]
 <: x.join()
 ```
 
-### @(_v_: arr).slice(_begin_: num, _end_: num): arr
+### @(_v_: arr&lt;T&gt;).slice(_begin_: num, _end_: num): arr&lt;T&gt;
 配列の _begin_ 番目から _end_ 番目の部分を切り出して返します。
 
 ```aiscript playground
@@ -341,7 +341,7 @@ let x = [1, 2, 3, 4, 5]
 <: x.slice(1, 4)
 ```
 
-### @(_v_: arr).incl(_i_: value): bool
+### @(_v_: arr&lt;T&gt;).incl(_i_: T): bool
 配列に指定した値が含まれているかどうかを返します。  
 
 ```aiscript playground
@@ -351,7 +351,7 @@ let x = [1, 2, 3, 4, 5]
 <: x.incl(6)
 ```
 
-### @(_v_: arr).map(_func_: fn): arr
+### @(_v_: arr&lt;T&gt;).map&lt;U&gt;(_func_: @(T, num) =&gt; U): arr&lt;U&gt;
 配列の各要素に対し _func_ を非同期的に呼び出します。
 それぞれの要素を _func_ の返り値で置き換えたものを返します。  
 
@@ -359,11 +359,11 @@ let x = [1, 2, 3, 4, 5]
 let x = ['田中', '鈴木', '山本']
 
 <: x.map(@(v) {
-    return `{v}さん`
+    return `さん`
 })
 ```
 
-### @(_v_: arr).filter(_func_: fn): arr
+### @(_v_: arr&lt;T&gt;).filter(_func_: @(T, num) =&gt; bool): arr&lt;T&gt;
 配列の要素のうち _func_ が true を返すようなもののみを抜き出して返します。  
 順序は維持されます。
 
@@ -376,8 +376,8 @@ let x = [1, 2, 3, 4, 5]
 })
 ```
 
-### @(_v_: arr).reduce(_func_: Callback, _initial_: value): value
-`Callback`: @(_acm_: value, _item_: value, _index_: num): value  
+### @(_v_: arr&lt;T&gt;).reduce&lt;U&gt;(_func_: Callback, _initial_: U): U
+`Callback`: @(_acm_: U, _item_: T, _index_: num): U  
 配列の各要素に対し _func_ を順番に呼び出します。  
 各呼び出しでは、前回の結果が第1引数 _acm_ として渡されます。  
 _initial_ が指定された場合は初回呼び出しの引数が(_initial_, _v_\[0], 0)、  
@@ -393,7 +393,7 @@ let x = [1, 2, 3, 4, 5]
 }, 0)
 ```
 
-### @(_v_: arr).find(_func_: @(_item_: value, _index_: num) { bool }): value
+### @(_v_: arr&lt;T&gt;).find(_func_: @(_item_: T, _index_: num) =&gt; bool ): T | null
 配列から _func_ が true を返すような要素を探し、その値を返します。
 
 ```aiscript playground
@@ -405,7 +405,7 @@ let x = [1, 2, 3, 4, 5]
 })
 ```
 
-### @(_v_: arr).index_of(_val_: value, _fromIndex_?: num): num
+### @(_v_: arr&lt;T&gt;).index_of(_val_: T, _fromIndex_?: num): num
 配列から_val_と同じ値を探し、その添字を返します。  
 _fromIndex_が指定されていれば、その位置から検索を開始します。  
 _fromIndex_が負値の時は末尾からの位置（配列の長さ+_fromIndex_）が使用されます。  
@@ -429,7 +429,7 @@ x.reverse()
 <: x
 ```
 
-### @(_v_: arr).copy(): arr
+### @(_v_: arr&lt;T&gt;).copy(): arr&lt;T&gt;
 配列のコピーを生成します。  
 シャローコピーであり、配列やオブジェクトの参照は維持されます。  
 
@@ -446,7 +446,7 @@ xCopy.push(6)
 <: xCopy
 ```
 
-### @(_v_: arr).sort(_comp_: @(_a_: value, _b_: value)): arr
+### @(_v_: arr&lt;T&gt;).sort(_comp_: @(_a_: T, _b_: T) => num): arr&lt;T&gt;
 **【この操作は配列を書き換えます】**  
 配列の並べ替えをします。第1引数 _comp_ として次のような比較関数を渡します。  
 安定ソートです。
@@ -473,7 +473,7 @@ x.sort(@(a, b) {
 <: x
 ```
 
-### @(_v_: arr).fill(_val_?: value, _fromIndex_?: num, _toIndex_?: num): arr
+### @(_v_: arr&lt;T&gt;).fill(_val_?: T, _fromIndex_?: num, _toIndex_?: num): arr&lt;T&gt;
 **【この操作は配列を書き換えます】**  
 配列の _fromIndex_ から _toIndex_ までの範囲の要素を _val_ で置き換えます。  
 _val_ 省略時は`null`で置き換えます。  
@@ -488,7 +488,7 @@ x.fill(0, 1, 4)
 <: x
 ```
 
-### @(_v_: arr).repeat(_times_: num): arr
+### @(_v_: arr&lt;T&gt;).repeat(_times_: num): arr&lt;T&gt;
 配列を _times_ 回繰り返した配列を作成します。  
 `arr.copy`同様シャローコピーであり、配列やオブジェクトの参照は維持されます。  
 _times_ には0以上の整数値を指定します。それ以外ではエラーになります。 
@@ -499,7 +499,7 @@ let x = [1, 2, 3]
 <: x.repeat(3)
 ```
 
-### @(_v_: arr).splice(_index_: num, _remove_count_?: num, _items_?: arr\&lt;value&gt;): arr\&lt;value&gt;
+### @(_v_: arr&lt;T&gt;).splice(_index_: num, _remove_count_?: num, _items_?: arr&lt;T&gt;): arr&lt;T&gt;
 **【この操作は配列を書き換えます】**  
 配列の _index_ から _remove_count_ 個の要素を取り除き、その位置に _items_ の要素を挿入します。  
 返り値として、取り除いた要素の配列を返します。\
@@ -529,7 +529,7 @@ let x = [1, [2, 3], [4, [5, 6]]]
 <: x.flat(2)
 ```
 
-### @(_v_: arr).flat_map(_func_: @(_item_: value, _index_: num) { value }): arr
+### @(_v_: arr&lt;T&gt;).flat_map&lt;U&gt;(_func_: @(_item_: T, _index_: num) =&gt; arr&lt;U&gt; | U ): arr&lt;U&gt;
 配列の各要素を _func_ の返り値で置き換えた後、1階層平坦化した新しい配列を作成します。  
 _func_ は非同期的に呼び出されます。
 
@@ -541,7 +541,7 @@ let x = [1, 2, 3]
 })
 ```
 
-### @(_v_: arr).insert(_index_: num, _item_: value): null
+### @(_v_: arr&lt;T&gt;).insert(_index_: num, _item_: T): null
 **【この操作は配列を書き換えます】**  
 配列の _index_ の位置に _item_ を挿入します。\
 _index_ が負の場合は末尾から数えます。\
@@ -556,7 +556,7 @@ x.insert(2, 6)
 <: x
 ```
 
-### @(_v_: arr).remove(_index_: num): value | null
+### @(_v_: arr&lt;T&gt;).remove(_index_: num): T | null
 **【この操作は配列を書き換えます】**  
 配列から _index_ の位置の要素を取り除き、その要素を返します。\
 _index_ が負の場合は末尾から数えます。\
@@ -572,7 +572,7 @@ let removed = x.remove(2)
 <: x
 ```
 
-### @(_v_: arr).every(_func_: @(_item_: value, _index_: num) { bool }): bool
+### @(_v_: arr&lt;T&gt;).every(_func_: @(_item_: T, _index_: num) =&gt; bool ): bool
 配列の全ての要素に対して _func_ が true を返す時のみ true 返します。空配列には常に true を返します。
 
 ```aiscript playground
@@ -591,7 +591,7 @@ let y = [2, 4, 6, 7, 8]
 <: judgeAllEven(y)
 ```
 
-### @(_v_: arr).some(_func_: @(_item_: value, _index_: num) { bool }): bool
+### @(_v_: arr&lt;T&gt;).some(_func_: @(_item_: T, _index_: num) =&gt; bool ): bool
 配列の要素に対して _func_ が true を返す要素が存在する時のみ true 返します。
 
 ```aiscript playground
