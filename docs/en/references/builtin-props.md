@@ -258,7 +258,7 @@ let x = [1, 2, 3, 4, 5]
 <: x.incl(6)
 ```
 
-### @(_v_: arr&lt;U&gt;).map(_func_: @(T, num) =&gt; U): arr&lt;U&gt;
+### @(_v_: arr&lt;T&gt;).map(_func_: @(T, num) =&gt; U): arr&lt;U&gt;
 Asynchronously calls _func_ on each element of the array.\
 Returns a new array with elements replaced by the results of _func_.  
 
