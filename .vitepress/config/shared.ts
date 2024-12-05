@@ -12,6 +12,9 @@ export const shared = defineConfig({
         socialLinks: [
             { icon: 'github', link: 'https://github.com/aiscript-dev/aiscript' },
         ],
+        search: {
+            provider: "local",
+        },
     },
 
     head: [
