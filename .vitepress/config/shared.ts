@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress';
 import aiscriptTmLanguage from 'aiscript-vscode/aiscript/syntaxes/aiscript.tmLanguage.json' with { type: 'json' };
+import { jaSearchLocale } from './ja';
 import { createPlaygroundTransformer } from '../scripts/playground-transformer';
 
 // https://vitepress.dev/reference/site-config
@@ -13,7 +14,14 @@ export const shared = defineConfig({
             { icon: 'github', link: 'https://github.com/aiscript-dev/aiscript' },
         ],
         search: {
-            provider: "local",
+            provider: 'local',
+            options: {
+                locales: {
+                    ja: {
+                        translations: jaSearchLocale,
+                    },
+                }
+            }
         },
     },
 
