@@ -27,6 +27,7 @@ Displays a string on the screen.
 Accepts string input.  
 
 ### :: Core
+See [List of operators](./syntax.md##list-of-operators) for operator-equivalent functions.
 
 #### #Core:v
 Type: `str`  
@@ -37,6 +38,12 @@ Get the type name of the value.
 
 #### @Core:to_str(_v_: any): str
 Obtains a string representing a value.  
+
+#### @Core:range(_a_: num, _b_: num): arr<num>
+Generates a sequence of numbers starting from _a_ and ends in  _b_.  
+Increments by 1 when `a < b`, decrements by 1 when `a > b`.  
+Returns `[a]` when `a == b`.  
+Behavior is not defined when `a` and/or `b` is non-integer.  
 
 #### @Core:sleep(_time_: num): void
 Wait for the specified time (milliseconds).
