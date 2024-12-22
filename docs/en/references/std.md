@@ -27,7 +27,7 @@ Displays a string on the screen.
 Accepts string input.  
 
 ### :: Core
-See [List of operators](./syntax.md##list-of-operators) for operator-equivalent functions.
+See [List of operators](./syntax.md#list-of-operators) for operator-equivalent functions.
 
 #### #Core:v
 Type: `str`  
