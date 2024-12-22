@@ -38,7 +38,7 @@ AiScriptのバージョンです。
 #### @Core:to_str(_v_: any): str
 値を表す文字列を取得します。  
 
-#### @Core:range(_a_: num, _b_: num): arr<num>
+#### @Core:range(_a_: num, _b_: num): `arr<num>`
 _a_ から始まり _b_ で終わる数値の等差配列を返します。  
 `a < b`なら1づつ増え、`a > b`なら1づつ減ります。  
 `a == b`であれば`[a]`を返します。  
