@@ -179,6 +179,10 @@ Generates the copy of the object.
 #### @Obj:merge&lt;T&gt;(_o1_: obj&lt;T&gt;, _o2_: obj&lt;T&gt;): obj&lt;T&gt;
 Returns a merged version of the two objects.
 
+#### @Obj:pick&lt;T&gt;(_o_: obj&lt;T&gt;, _keys_: arr&lt;str&gt;): obj&lt;T&gt;
+Extracts `o`'s properties which has it's key in _keys_.  
+Property is set `NULL` when the key is in `keys` but not in `o` .
+
 ### :: Error
 #### @Error:create(_name_: str, _info_?: any): error
 Create error type value.
