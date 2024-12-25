@@ -181,6 +181,10 @@ encoded_text をエンコードされたURI構成要素としてデコードし�
 #### @Obj:merge&lt;T&gt;(_o1_: obj&lt;T&gt;, _o2_: obj&lt;T&gt;): obj&lt;T&gt;
 ２つのオブジェクトを併合したものを返します。
 
+#### @Obj:pick&lt;T&gt;(_o_: obj&lt;T&gt;, _keys_: arr&lt;str&gt;): obj&lt;T&gt;
+オブジェクト`o`のプロパティのうち、キー名が`keys`に含まれるもののみを抽出します。  
+`keys`にあって`o`にないキーは`NULL`になります。
+
 ### :: Error
 #### @Error:create(_name_: str, _info_?: any): error
 エラー型の値を作成します。
