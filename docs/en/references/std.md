@@ -181,7 +181,7 @@ Returns a merged version of the two objects.
 
 #### @Obj:pick&lt;T&gt;(_o_: obj&lt;T&gt;, _keys_: arr&lt;str&gt;): obj&lt;T&gt;
 Extracts `o`'s properties which have keys in _keys_.  
-Property is set `NULL` when the key is in `keys` but not in `o` .
+Property is set `NULL` when the key is in `keys` but not in `o`.
 
 ### :: Error
 #### @Error:create(_name_: str, _info_?: any): error
