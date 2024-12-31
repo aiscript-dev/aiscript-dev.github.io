@@ -136,9 +136,88 @@ let x = "Hey, how are you?"
 <: x.split(",")
 ```  
 
-Here is the English translation of the provided document while preserving the original formatting:
+### @(_v_: str).replace(_old_: str, _new_: str): str
+Returns the string where each occurrence of _old_ is replaced by _new_.
 
----
+```aiscript playground
+let x = "Hello World!"
+
+<: x.replace("World", "Ai-Chan")
+```
+
+### @(_v_: str).index_of(_search_: str, _fromIndex_?: num): num
+Locates the first occurrence of _search_ in the string and returns the position.\
+When _fromIndex_ is provided, starts the search from that position.\
+If _fromIndex_ is a negative value, the position from the tail (str.len + _fromIndex_) is used.\
+Returns -1 if not found.
+
+```aiscript playground
+let x = "Hello World!"
+
+<: x.index_of("World")
+<: x.index_of("World", -7)
+```
+
+### @(_v_: str).pad_start(_width_: num, _pad_?: str): str
+Returns the string extended to length _width_, pre-filled with repeating _pad_.\
+If _pad_ is omitted, it is filled with spaces(`' '`).\
+If _pad_ is too long, the end of _pad_ is truncated.
+
+```aiscript playground
+let x = "7"
+
+<: `Today is 2024/12/{x.pad_start(2, "0")}`
+```
+
+### @(_v_: str).pad_end(_width_: num, _pad_?: str): str
+Returns the string extended to length _width_, post-filled with repeating _pad_.\
+If _pad_ is omitted, it is filled with spaces(`' '`).\
+If _pad_ is too long, the end of _pad_ is truncated.
+
+```aiscript playground
+let x = "5"
+
+<: `I want {x.pad_end(4, "0")} yen`
+```
+
+### @(_v_: str).trim(): str
+Returns the string trimmed of leading and/or trailing spaces.
+
+```aiscript playground
+let x = "  Hello World!  "
+
+<: x.trim()
+```
+
+### @(_v_: str).upper(): str
+Returns the string with all lowercase letters uppercased.
+
+```aiscript playground
+let x = "Hello World!"
+
+<: x.upper()
+```
+
+### @(_v_: str).lower(): str
+Returns the string with all uppercase letters lowercased.
+
+```aiscript playground
+let x = "Hello World!"
+
+<: x.lower()
+```
+
+### @(_v_: str).charcode_at(_i_: num): num | null
+Returns the [integer from `0` to `65535` representing the UTF-16 code unit](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt) of the _i_-th character in the string.\
+Index is based on UTF-16 code units.\
+If the string contains surrogate pairs, it may return a higher or lower isolated surrogate, depending on the position.\
+Returns null when _i_-th character does not exist.
+
+### @(_v_: str).codepoint_at(_i_: num): num | null
+Returns the [code point value](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt) of the _i_-th character in the string.\
+Index is based on UTF-16 code units.\
+If the string contains a surrogate pair and the specified position is a lower surrogate, the lower isolated surrogate is returned.\
+Returns null when _i_-th character does not exist.
 
 ## Arrays
 
