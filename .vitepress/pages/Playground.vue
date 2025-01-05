@@ -2,8 +2,14 @@
     <div :class="$style.playgroundRoot">
         <div :class="$style.playgroundHeader">
             <div :class="$style.playgroundHeaderInner">
-                <div>Playground <small>(v{{ AISCRIPT_VERSION }})</small></div>
-                <div :class="$style.playgroundOptions"></div>
+                <div>Playground <small>(v{{ version }})</small></div>
+                <div :class="$style.playgroundOptions">
+                    <select :class="$style.playgroundSelect" v-model="version">
+                        <option v-for="version in versions" :value="version">
+                            {{ version === latestVersion ? `${version} (latest)` : version }}
+                        </option>
+                    </select>
+                </div>
             </div>
         </div>
         <div :class="[$style.playgroundPaneRoot, $style.playgroundEditorPane]">
@@ -101,6 +107,11 @@ const fizzbuzz = `for (let i, 100) {
 \t\telif (i % 5 == 0) "Buzz"
 \t\telse i
 }`;
+
+const latestVersion = '0.19.0';
+const versions = [AISCRIPT_VERSION, '0.19.0', '0.18.0', '0.17.0', '0.16.0', '0.15.0', '0.14.1'];
+
+const version = ref(latestVersion);
 
 const resultTab = ref<'output' | 'ast' | 'metadata'>('output');
 
@@ -309,7 +320,7 @@ function clearLog() {
 //#region Permalink with hash
 type HashData = {
     code: string;
-    // TODO: バージョン情報（マルチバージョン対応の際に必要。なければ最新にフォールバック）
+    version: string;
 };
 const hash = ref<string | null>(inBrowser ? window.location.hash.slice(1) || localStorage.getItem('ais:playground') : null);
 const hashData = computed<HashData | null>(() => {
@@ -334,11 +345,20 @@ onMounted(async () => {
     await init();
     initAiScriptEnv();
 
-    if (hashData.value != null && hashData.value.code != null) {
-        code.value = hashData.value.code;
+    if (hashData.value != null) {
+        if (hashData.value.code != null) {
+            code.value = hashData.value.code;
+        }
+        if (hashData.value.version != null) {
+            version.value = hashData.value.version;
+        }
     }
-    watch([code], () => {
-        updateHash({ code: code.value });
+
+    watch([code, version], () => {
+        updateHash({
+            code: code.value,
+            version: version.value,
+        });
     }, { immediate: true });
 
     watch(code, async (newCode) => {
@@ -627,6 +647,17 @@ onUnmounted(() => {
 .playgroundButtonPrimary:hover {
     color: var(--vp-button-brand-hover-text);
     background-color: var(--vp-button-brand-hover-bg);
+}
+
+.playgroundSelect {
+    background-color: var(--vp-button-alt-bg);
+    transition: background-color 0.25s;
+    padding: 3px 16px;
+    border-radius: 8px;
+}
+
+.playgroundSelect:hover {
+    background-color: var(--vp-button-alt-hover-bg);
 }
 
 @media (max-width: 768px) {
