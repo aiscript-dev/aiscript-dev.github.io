@@ -89,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { AISCRIPT_VERSION, Parser, Interpreter, utils, errors, type Ast } from '@syuilo/aiscript';
+import { AISCRIPT_VERSION } from '@syuilo/aiscript';
 import { inBrowser } from 'vitepress';
 import { ref, computed, useTemplateRef, nextTick, onMounted, watch, onUnmounted } from 'vue';
 import { createHighlighterCore } from 'shiki/core';
@@ -97,6 +97,7 @@ import type { HighlighterCore, LanguageRegistration } from 'shiki/core';
 import { createOnigurumaEngine } from 'shiki/engine/oniguruma';
 import lzString from 'lz-string';
 import { useThrottle } from '../scripts/throttle';
+import { Runner } from '../scripts/runner';
 
 // lz-stringがCommonJSモジュールだったみたいなので
 const { compressToEncodedURIComponent, decompressFromEncodedURIComponent } = lzString;
@@ -177,8 +178,7 @@ function replaceWithFizzbuzz() {
 //#endregion
 
 //#region Runner
-let parser: Parser | null = null;
-let interpreter: Interpreter | null = null;
+let runner: Runner | null = null;
 
 const isRunning = ref(false);
 
@@ -190,7 +190,7 @@ const logEl = useTemplateRef('logEl');
 
 const isSyntaxError = ref(false);
 
-const ast = ref<Ast.Node[] | null>(null);
+const ast = ref<unknown>(null);
 const astHtml = ref('');
 
 const metadata = ref<unknown>(null);
@@ -199,18 +199,19 @@ const metadataHtml = ref('');
 function parse() {
     isSyntaxError.value = false;
 
-    if (parser != null) {
-        try {
-            const _ast = parser.parse(code.value);
-            logs.value = [];
-            ast.value = _ast;
+    if (runner == null) {
+        ast.value = null;
+    } else {
+        const result = runner.parse(code.value);
+        logs.value = [];
 
-            const meta = Interpreter.collectMetadata(_ast);
-            metadata.value = meta?.get(null) ?? null;
-        } catch (err) {
-            if (err instanceof errors.AiScriptError) {
+        if (result.ok) {
+            ast.value = result.ast;
+            metadata.value = result.metadata?.get(null) ?? null;
+        } else {
+            if (result.error != null) {
                 logs.value = [{
-                    text: `[SyntaxError] ${err.name}: ${err.message}`,
+                    text: `[SyntaxError] ${result.error.name}: ${result.error.message}`,
                     type: 'error',
                 }];
                 isSyntaxError.value = true;
@@ -218,30 +219,15 @@ function parse() {
             ast.value = null;
             metadata.value = null;
         }
-    } else {
-        ast.value = null;
     }
 }
 
 function initAiScriptEnv() {
-    if (parser == null) {
-        parser = new Parser();
-    }
-    if (interpreter != null) {
-        interpreter.abort();
-    }
-    interpreter = new Interpreter({}, {
-        out: (value) => {
-            logs.value.push({
-                text: value.type === 'num' ? value.value.toString() : value.type === 'str' ? `"${value.value}"` : JSON.stringify(utils.valToJs(value), null, 2) ?? '',
-            });
-        },
-        log: (type, params) => {
-            if (type === 'end' && params.val != null && 'type' in params.val) {
-                logs.value.push({
-                    text: utils.valToString(params.val, true),
-                });
-            }
+    runner?.dispose();
+
+    runner = new Runner({
+        print(text) {
+            logs.value.push({ text });
         },
     });
 }
@@ -255,10 +241,10 @@ async function run() {
     isRunning.value = true;
 
     parse();
-    if (ast.value != null && interpreter !== null) {
+    if (ast.value != null && runner !== null) {
         try {
             const execStartTime = performance.now();
-            await interpreter.exec(ast.value);
+            await runner.exec(ast.value);
             const execEndTime = performance.now();
             logs.value.push({
                 text: `[Playground] Execution Completed in ${Math.round(execEndTime - execStartTime)}ms`,
@@ -269,29 +255,16 @@ async function run() {
                     top: logEl.value.scrollHeight,
                 });
             }
-        } catch (err) {
-            if (err instanceof errors.AiScriptError) {
-                let errorName = 'AiScriptError';
-
-                if (err instanceof errors.AiScriptSyntaxError) {
-                    errorName = 'SyntaxError';
-                } else if (err instanceof errors.AiScriptTypeError) {
-                    errorName = 'TypeError';
-                } else if (err instanceof errors.AiScriptRuntimeError) {
-                    errorName = 'RuntimeError';
-                } else if (err instanceof errors.AiScriptIndexOutOfRangeError) {
-                    errorName = 'IndexOutOfRangeError';
-                } else if (err instanceof errors.AiScriptUserError) {
-                    errorName = 'UserError';
-                }
-
+        } catch (error) {
+            const errorName = runner.getErrorName(error);
+            if (errorName == null) {
                 logs.value.push({
-                    text: `[${errorName}] ${err.name}: ${err.message}`,
+                    text: `[Error] ${error}`,
                     type: 'error',
                 });
             } else {
                 logs.value.push({
-                    text: `[Error] ${err}`,
+                    text: `[${errorName}] ${error.name}: ${error.message}`,
                     type: 'error',
                 });
             }
@@ -302,8 +275,8 @@ async function run() {
 }
 
 function abort() {
-    if (interpreter != null) {
-        interpreter.abort();
+    if (runner != null) {
+        runner.dispose();
         logs.value.push({
             text: '[Playground] Execution Aborted',
             type: 'info',
@@ -419,9 +392,7 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-    if (interpreter != null) {
-        interpreter.abort();
-    }
+    runner?.dispose();
 });
 </script>
 
