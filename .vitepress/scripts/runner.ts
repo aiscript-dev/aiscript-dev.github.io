@@ -1,14 +1,3 @@
-export type ParseResult =
-    | {
-        ok: true;
-        ast: unknown;
-        metadata: Map<string | null, unknown>;
-    }
-    | {
-        ok: false;
-        error: Error | null;
-    };
-
 export abstract class Runner {
     abstract version: string;
 
@@ -19,8 +8,9 @@ export abstract class Runner {
         this.print = print;
     }
 
-    abstract parse(code: string): ParseResult;
+    abstract parse(code: string): readonly [unknown, Map<string | null, unknown> | undefined];
     abstract exec(node: unknown): Promise<void>;
-    abstract getErrorName(error: unknown): string | undefined;
+    abstract isAiScriptError(error: unknown): error is Error;
+    abstract getErrorName(error: Error): string | undefined;
     abstract dispose(): void;
 }

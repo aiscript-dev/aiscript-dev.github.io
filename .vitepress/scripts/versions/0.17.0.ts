@@ -1,21 +1,13 @@
 import { AISCRIPT_VERSION, Parser, Interpreter, utils, errors, type Ast } from 'aiscript0_17';
-import { type ParseResult, Runner } from '../runner';
+import { Runner } from '../runner';
 
 export default class extends Runner {
     version = AISCRIPT_VERSION;
 
-    parse(code: string): ParseResult {
-        try {
-            const ast = Parser.parse(code);
-            const metadata = Interpreter.collectMetadata(ast) ?? new Map();
-
-            return { ok: true, ast, metadata };
-        } catch (error) {
-            if (error instanceof errors.AiScriptError) {
-                return { ok: false, error };
-            }
-            return { ok: false, error: null };
-        }
+    parse(code: string) {
+        const ast = Parser.parse(code);
+        const metadata = Interpreter.collectMetadata(ast);
+        return [ast, metadata] as const;
     }
 
     private interpreter = new Interpreter({}, {
@@ -35,7 +27,10 @@ export default class extends Runner {
     async exec(node: unknown): Promise<void> {
         await this.interpreter.exec(node as Ast.Node[]);
     }
-    getErrorName(error: unknown): string | undefined {
+    isAiScriptError(error: unknown): error is errors.AiScriptError {
+        return error instanceof errors.AiScriptError;
+    }
+    getErrorName(error: errors.AiScriptError): string | undefined {
         if (!(error instanceof errors.AiScriptError)) {
             return;
         }

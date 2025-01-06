@@ -200,16 +200,15 @@ function parse() {
     if (runner.value == null) {
         ast.value = null;
     } else {
-        const result = runner.value.parse(code.value);
-        logs.value = [];
-
-        if (result.ok) {
-            ast.value = result.ast;
-            metadata.value = result.metadata?.get(null) ?? null;
-        } else {
-            if (result.error != null) {
+        try {
+            const [ast_, metadata_] = runner.value.parse(code.value);
+            logs.value = [];
+            ast.value = ast_;
+            metadata.value = metadata_?.get(null) ?? null;
+        } catch (err) {
+            if (runner.value.isAiScriptError(err)) {
                 logs.value = [{
-                    text: `[SyntaxError] ${result.error.name}: ${result.error.message}`,
+                    text: `[SyntaxError] ${err.name}: ${err.message}`,
                     type: 'error',
                 }];
                 isSyntaxError.value = true;
@@ -253,16 +252,16 @@ async function run() {
                     top: logEl.value.scrollHeight,
                 });
             }
-        } catch (error) {
-            const errorName = runner.value.getErrorName(error);
-            if (errorName == null) {
+        } catch (err) {
+            if (runner.value.isAiScriptError(err)) {
+                const errorName = runner.value.getErrorName(err);
                 logs.value.push({
-                    text: `[Error] ${error}`,
+                    text: `[${errorName}] ${err.name}: ${err.message}`,
                     type: 'error',
                 });
             } else {
                 logs.value.push({
-                    text: `[${errorName}] ${error.name}: ${error.message}`,
+                    text: `[Error] ${err}`,
                     type: 'error',
                 });
             }
