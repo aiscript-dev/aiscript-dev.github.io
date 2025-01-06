@@ -290,7 +290,7 @@ function clearLog() {
 //#region Permalink with hash
 type HashData = {
     code: string;
-    version: string;
+    version?: string;
 };
 const hash = ref<string | null>(inBrowser ? window.location.hash.slice(1) || localStorage.getItem('ais:playground') : null);
 const hashData = computed<HashData | null>(() => {
