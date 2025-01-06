@@ -14,6 +14,24 @@ importers:
       aiscript-vscode:
         specifier: github:aiscript-dev/aiscript-vscode#v0.1.15
         version: https://codeload.github.com/aiscript-dev/aiscript-vscode/tar.gz/c3cde89e79a41d93540cf8a48cd619c3f2dcb1b7
+      aiscript0_14:
+        specifier: npm:@syuilo/aiscript@0.14.1
+        version: '@syuilo/aiscript@0.14.1'
+      aiscript0_15:
+        specifier: npm:@syuilo/aiscript@0.15.0
+        version: '@syuilo/aiscript@0.15.0'
+      aiscript0_16:
+        specifier: npm:@syuilo/aiscript@0.16.0
+        version: '@syuilo/aiscript@0.16.0'
+      aiscript0_17:
+        specifier: npm:@syuilo/aiscript@0.17.0
+        version: '@syuilo/aiscript@0.17.0'
+      aiscript0_18:
+        specifier: npm:@syuilo/aiscript@0.18.0
+        version: '@syuilo/aiscript@0.18.0'
+      aiscript0_19:
+        specifier: npm:@syuilo/aiscript@0.19.0
+        version: '@syuilo/aiscript@0.19.0'
       lz-string:
         specifier: ^1.5.0
         version: 1.5.0
@@ -562,6 +580,24 @@ packages:
   '@shikijs/vscode-textmate@9.3.1':
     resolution: {integrity: sha512-79QfK1393x9Ho60QFyLti+QfdJzRQCVLFb97kOIV7Eo9vQU/roINgk7m24uv0a7AUvN//RDH36FLjjK48v0s9g==}
 
+  '@syuilo/aiscript@0.14.1':
+    resolution: {integrity: sha512-zyX+QWdE/PtEjem+15uPd1J43JIOfaRziGrkwUx+BU/dB9yJADkbwzH9ZkVr2Jzi56TYE4p3Xs5y2Kp+Z6/34A==}
+
+  '@syuilo/aiscript@0.15.0':
+    resolution: {integrity: sha512-vauMbqacuHufE4W7bAm5BDWlci3mWg1ZaerPNHKBMrRXDjEfvBkBGZNXKSWvi+zmhiYAbWyozPIlV6byttYpCw==}
+
+  '@syuilo/aiscript@0.16.0':
+    resolution: {integrity: sha512-CXvoWOq6kmOSUQtKv0IEf7Ebfkk5PO1LxAgLqgRRPgssPvDvINCXu/gFNXKdapkFMkmX+Gj8qjemKR1vnUS4ZA==}
+
+  '@syuilo/aiscript@0.17.0':
+    resolution: {integrity: sha512-3JtQ1rWJHMxQ3153zLCXMUOwrOgjPPYGBl0dPHhR0ohm4tn7okMQRugxMCT0t3YxByemb9FfiM6TUjd0tEGxdA==}
+
+  '@syuilo/aiscript@0.18.0':
+    resolution: {integrity: sha512-/iY9Vv4LLjtW/KUzId1QwXC4BlpIEPCMcoT7dyRhYdyxtwhS3Hx4b/4j1HYP+n3Pq9XKyW5zvkY72/+DNu4g6Q==}
+
+  '@syuilo/aiscript@0.19.0':
+    resolution: {integrity: sha512-ZWG4s1m6RrFjE7NeIMaxFz769YO1jW5ReTrOROrEO4IHheOrjxxJ/Ffe2TUNqX9/XxDloMwfWplKhfSzx8LGMA==}
+
   '@syuilo/aiscript@1.0.0-dev.20241226':
     resolution: {integrity: sha512-pRX7Mmu2RDWHFaSI6emW0coCq6IAXxYX9Z6E2DNfgpc/UZFzVeIeSRt7WI3cfKWOgNyIumr77TCG0hMXeksycA==}
 
@@ -699,6 +735,10 @@ packages:
   ansi-colors@4.1.3:
     resolution: {integrity: sha512-/6w/C21Pm1A7aZitlI5Ni/2J6FFQN8i1Cvz3kHABAAbw93v/NlvKdVOqz7CCWz/3iv/JplRSEEZ83XION15ovw==}
     engines: {node: '>=6'}
+
+  autobind-decorator@2.4.0:
+    resolution: {integrity: sha512-OGYhWUO72V6DafbF8PM8rm3EPbfuyMZcJhtm5/n26IDwO18pohE4eNazLoCGhPiXOCD0gEGmrbU3849QvM8bbw==}
+    engines: {node: '>=8.10', npm: '>=6.4.1'}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -1035,6 +1075,10 @@ packages:
 
   uuid@11.0.3:
     resolution: {integrity: sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==}
+    hasBin: true
+
+  uuid@9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
     hasBin: true
 
   uuid@9.0.1:
@@ -1586,6 +1630,44 @@ snapshots:
 
   '@shikijs/vscode-textmate@9.3.1': {}
 
+  '@syuilo/aiscript@0.14.1':
+    dependencies:
+      autobind-decorator: 2.4.0
+      seedrandom: 3.0.5
+      stringz: 2.1.0
+      uuid: 9.0.0
+
+  '@syuilo/aiscript@0.15.0':
+    dependencies:
+      autobind-decorator: 2.4.0
+      seedrandom: 3.0.5
+      stringz: 2.1.0
+      uuid: 9.0.0
+
+  '@syuilo/aiscript@0.16.0':
+    dependencies:
+      seedrandom: 3.0.5
+      stringz: 2.1.0
+      uuid: 9.0.1
+
+  '@syuilo/aiscript@0.17.0':
+    dependencies:
+      seedrandom: 3.0.5
+      stringz: 2.1.0
+      uuid: 9.0.1
+
+  '@syuilo/aiscript@0.18.0':
+    dependencies:
+      seedrandom: 3.0.5
+      stringz: 2.1.0
+      uuid: 9.0.1
+
+  '@syuilo/aiscript@0.19.0':
+    dependencies:
+      seedrandom: 3.0.5
+      stringz: 2.1.0
+      uuid: 9.0.1
+
   '@syuilo/aiscript@1.0.0-dev.20241226':
     dependencies:
       seedrandom: 3.0.5
@@ -1746,6 +1828,8 @@ snapshots:
       '@algolia/requester-node-http': 5.18.0
 
   ansi-colors@4.1.3: {}
+
+  autobind-decorator@2.4.0: {}
 
   balanced-match@1.0.2: {}
 
@@ -2169,6 +2253,8 @@ snapshots:
       unist-util-visit-parents: 6.0.1
 
   uuid@11.0.3: {}
+
+  uuid@9.0.0: {}
 
   uuid@9.0.1: {}
 

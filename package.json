@@ -9,6 +9,12 @@
   "packageManager": "pnpm@9.14.3",
   "devDependencies": {
     "@syuilo/aiscript": "dev",
+    "aiscript0_19": "npm:@syuilo/aiscript@0.19.0",
+    "aiscript0_18": "npm:@syuilo/aiscript@0.18.0",
+    "aiscript0_17": "npm:@syuilo/aiscript@0.17.0",
+    "aiscript0_16": "npm:@syuilo/aiscript@0.16.0",
+    "aiscript0_15": "npm:@syuilo/aiscript@0.15.0",
+    "aiscript0_14": "npm:@syuilo/aiscript@0.14.1",
     "aiscript-vscode": "github:aiscript-dev/aiscript-vscode#v0.1.15",
     "lz-string": "^1.5.0",
     "markdown-it-mathjax3": "^4.3.2",
