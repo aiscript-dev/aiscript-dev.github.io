@@ -2,10 +2,10 @@
     <div :class="$style.playgroundRoot">
         <div :class="$style.playgroundHeader">
             <div :class="$style.playgroundHeaderInner">
-                <div>Playground <small>(v{{ version }})</small></div>
+                <div>Playground <small>(v{{ runner?.version ?? "???" }})</small></div>
                 <div :class="$style.playgroundOptions">
                     <select :class="$style.playgroundSelect" v-model="version">
-                        <option v-for="version in versions" :value="version">
+                        <option v-for="version in versionModules.keys()" :value="version">
                             {{ version === latestVersion ? `${version} (latest)` : version }}
                         </option>
                     </select>
@@ -89,7 +89,6 @@
 </template>
 
 <script setup lang="ts">
-import { AISCRIPT_VERSION } from '@syuilo/aiscript';
 import { inBrowser } from 'vitepress';
 import { ref, computed, useTemplateRef, nextTick, onMounted, watch, onUnmounted } from 'vue';
 import { createHighlighterCore } from 'shiki/core';
@@ -97,7 +96,8 @@ import type { HighlighterCore, LanguageRegistration } from 'shiki/core';
 import { createOnigurumaEngine } from 'shiki/engine/oniguruma';
 import lzString from 'lz-string';
 import { useThrottle } from '../scripts/throttle';
-import { Runner } from '../scripts/runner';
+import type { Runner } from '../scripts/runner';
+import { latestVersion, versionModules } from '../scripts/versions';
 
 // lz-stringがCommonJSモジュールだったみたいなので
 const { compressToEncodedURIComponent, decompressFromEncodedURIComponent } = lzString;
@@ -108,9 +108,6 @@ const fizzbuzz = `for (let i, 100) {
 \t\telif (i % 5 == 0) "Buzz"
 \t\telse i
 }`;
-
-const latestVersion = '0.19.0';
-const versions = [AISCRIPT_VERSION, '0.19.0', '0.18.0', '0.17.0', '0.16.0', '0.15.0', '0.14.1'];
 
 const version = ref(latestVersion);
 
@@ -178,7 +175,8 @@ function replaceWithFizzbuzz() {
 //#endregion
 
 //#region Runner
-let runner: Runner | null = null;
+let RunnerConstructor: new (_: { print(text: string): void; }) => Runner;
+const runner = ref<Runner>();
 
 const isRunning = ref(false);
 
@@ -199,10 +197,10 @@ const metadataHtml = ref('');
 function parse() {
     isSyntaxError.value = false;
 
-    if (runner == null) {
+    if (runner.value == null) {
         ast.value = null;
     } else {
-        const result = runner.parse(code.value);
+        const result = runner.value.parse(code.value);
         logs.value = [];
 
         if (result.ok) {
@@ -223,9 +221,9 @@ function parse() {
 }
 
 function initAiScriptEnv() {
-    runner?.dispose();
+    runner.value?.dispose();
 
-    runner = new Runner({
+    runner.value = new RunnerConstructor({
         print(text) {
             logs.value.push({ text });
         },
@@ -241,10 +239,10 @@ async function run() {
     isRunning.value = true;
 
     parse();
-    if (ast.value != null && runner !== null) {
+    if (ast.value != null && runner.value != null) {
         try {
             const execStartTime = performance.now();
-            await runner.exec(ast.value);
+            await runner.value.exec(ast.value);
             const execEndTime = performance.now();
             logs.value.push({
                 text: `[Playground] Execution Completed in ${Math.round(execEndTime - execStartTime)}ms`,
@@ -256,7 +254,7 @@ async function run() {
                 });
             }
         } catch (error) {
-            const errorName = runner.getErrorName(error);
+            const errorName = runner.value.getErrorName(error);
             if (errorName == null) {
                 logs.value.push({
                     text: `[Error] ${error}`,
@@ -275,8 +273,8 @@ async function run() {
 }
 
 function abort() {
-    if (runner != null) {
-        runner.dispose();
+    if (runner.value != null) {
+        runner.value.dispose();
         logs.value.push({
             text: '[Playground] Execution Aborted',
             type: 'info',
@@ -316,7 +314,6 @@ onMounted(async () => {
     const loadStartedAt = Date.now();
 
     await init();
-    initAiScriptEnv();
 
     if (hashData.value != null) {
         if (hashData.value.code != null) {
@@ -327,6 +324,16 @@ onMounted(async () => {
         }
     }
 
+    watch(version, async () => {
+        const import_ = versionModules.get(version.value);
+        if (import_ == null) return;
+
+        const module = await import_();
+        RunnerConstructor = module.default;
+
+        initAiScriptEnv();
+    }, { immediate: true });
+
     watch([code, version], () => {
         updateHash({
             code: code.value,
@@ -334,7 +341,7 @@ onMounted(async () => {
         });
     }, { immediate: true });
 
-    watch(code, async (newCode) => {
+    watch([code, runner], ([newCode]) => {
         parse();
         if (highlighter) {
             editorHtml.value = highlighter.codeToHtml(newCode, {
@@ -392,7 +399,7 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-    runner?.dispose();
+    runner.value?.dispose();
 });
 </script>
 
