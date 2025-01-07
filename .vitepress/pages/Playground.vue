@@ -639,11 +639,15 @@ onUnmounted(() => {
     border-radius: 8px;
     font-family: var(--vp-font-family-base);
     font-size: 80%;
-    
+
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
-    background-position: right .75rem center;
+    background-position: right .75em center;
     background-size: 16px 12px;
+}
+
+:global(html.dark) .playgroundSelect {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fffff5db' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 }
 
 .playgroundSelect:hover {
