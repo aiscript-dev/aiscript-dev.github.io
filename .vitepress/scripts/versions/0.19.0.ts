@@ -31,9 +31,6 @@ export default class extends Runner {
         return error instanceof errors.AiScriptError;
     }
     getErrorName(error: errors.AiScriptError): string | undefined {
-        if (!(error instanceof errors.AiScriptError)) {
-            return;
-        }
         if (error instanceof errors.AiScriptSyntaxError) {
             return 'SyntaxError';
         }
