@@ -109,8 +109,6 @@ const fizzbuzz = `for (let i, 100) {
 \t\telse i
 }`;
 
-const version = ref(latestVersion);
-
 const resultTab = ref<'output' | 'ast' | 'metadata'>('output');
 
 //#region Editor
@@ -175,8 +173,10 @@ function replaceWithFizzbuzz() {
 //#endregion
 
 //#region Runner
-let RunnerConstructor: new (_: { print(text: string): void; }) => Runner;
+let RunnerConstructor: new (...args: ConstructorParameters<typeof Runner>) => Runner;
 const runner = ref<Runner>();
+
+const version = ref(latestVersion);
 
 const isRunning = ref(false);
 
@@ -324,6 +324,8 @@ onMounted(async () => {
     }
 
     watch(version, async () => {
+        editorLoading.value = true;
+
         const import_ = versionModules.get(version.value);
         if (import_ == null) return;
 
@@ -331,6 +333,8 @@ onMounted(async () => {
         RunnerConstructor = module.default;
 
         initAiScriptEnv();
+
+        editorLoading.value = false;
     }, { immediate: true });
 
     watch([code, version], () => {
@@ -417,8 +421,10 @@ onUnmounted(() => {
 
 .playgroundHeaderInner {
     margin: 0 auto;
-    padding: 0.5em 36px;
+    padding: 0 36px;
+    min-height: 40px;
     display: flex;
+    align-items: center;
 }
 
 .playgroundOptions {
@@ -629,8 +635,15 @@ onUnmounted(() => {
 .playgroundSelect {
     background-color: var(--vp-button-alt-bg);
     transition: background-color 0.25s;
-    padding: 3px 16px;
+    padding: 3px 36px 3px 16px;
     border-radius: 8px;
+    font-family: var(--vp-font-family-base);
+    font-size: 80%;
+    
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
 }
 
 .playgroundSelect:hover {
@@ -644,7 +657,7 @@ onUnmounted(() => {
     }
 
     .playgroundHeaderInner {
-        padding: 0.5em 24px;
+        padding: 0 24px;
     }
 
     .playgroundResultActionsLeft {
