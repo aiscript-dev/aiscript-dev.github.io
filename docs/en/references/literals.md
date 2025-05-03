@@ -107,8 +107,8 @@ Previous statement is { !true }.`
 {a: 12; b: 'hoge'} // Syntax Error
 ```
 
-## 関数
-Function literals are called “unnamed functions” and are similar in form to [function declaration](. /syntax.md#%E9%96%A2%E6%95%B0), but without a function name. (And since it is literal, of course it is an expression, not a statement.)  
+## Function
+Function literals are called “unnamed functions” and are similar in form to [function declaration](./syntax.md#functions), but without a function name. Since it is literal, it is an expression, not a statement.
 
 ```aiscript
 var func = @(){} // Function that does nothing
