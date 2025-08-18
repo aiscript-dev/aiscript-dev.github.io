@@ -133,6 +133,8 @@ _options_ に渡したオブジェクトを通じて、内部の挙動を指定�
 | `rc4_legacy` | RC4 | 浮動小数点数演算による範囲制限​(0.19.0以前のアルゴリズム) |
 | 無指定 または 'chacha20' | ChaCha20 | Rejection Sampling |
 
+なお、**非[セキュアコンテクスト](https://developer.mozilla.org/ja/docs/Web/Security/Secure_Contexts)などの[`crypto`](https://developer.mozilla.org/ja/docs/Web/API/Window/crypto)[`.subtle`](https://developer.mozilla.org/ja/docs/Web/API/Crypto/subtle)が利用できないJavascript環境下では`rc4_legacy`のみが利用可能**となり、デフォルトも`rc4_legacy`に変更されます。
+
 ```aiscript playground
 let rng = Math:gen_rng('AICHAN')
 
