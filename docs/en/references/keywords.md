@@ -13,6 +13,14 @@ let match = null // Error
     print('hoge')
 } // Error
 ```
+```aiscript
+let obj = {
+  default: true
+} // Since 1.1.0: it works when used as a key in object literals
+
+obj.default = false // Error (property access notation not supported yet)
+obj["default"] = false // This works
+```
 
 ## Words in Use and Words Planned for Use
 The keywords `match` and `for` are already used as keywords in the grammar.  
