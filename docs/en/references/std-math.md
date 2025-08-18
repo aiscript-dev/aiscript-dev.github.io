@@ -133,6 +133,9 @@ The change in behavior by specifying `options.algorithm` is shown below:
 | `rc4_legacy` | RC4 | Range limitation by floating-point arithmetic (pre-0.19.0 algorithm) |
 | Not specified, or `chacha20` | ChaCha20 | Rejection Sampling |
 
+**Note:** In JavaScript environments where [`crypto`](https://developer.mozilla.org/en-US/docs/Web/API/Window/crypto)[`.subtle`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle) is not available—such as in non-[secure contexts](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts)—only `rc4_legacy` can be used, and the default will also be changed to `rc4_legacy`.
+
+
 ```aiscript playground
 let rng = Math:gen_rng('AICHAN')
 
