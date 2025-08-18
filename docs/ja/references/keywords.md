@@ -12,6 +12,14 @@ let match = null // エラー
     print('hoge')
 } // エラー
 ```
+```aiscript
+let obj = {
+  default: true
+} // 1.1.0より、オブジェクトリテラルのキーとしての利用は可能
+
+obj.default = false // エラー（プロパティアクセス記法は未対応）
+obj["default"] = false // こちらは可
+```
 
 ## 使用中の語と使用予定の語
 `match`や`for`は文法中で既にキーワードとして使用されています。  
