@@ -87,7 +87,7 @@
                     <p class="custom-block-title">Syntax Error</p>
                     <p>See Output tab for details</p>
                 </div>
-                <div v-else-if="metadata" :class="$style.highlight" v-html="metadataHtml"></div>
+                <div v-else-if="metadata.exists" :class="$style.highlight" v-html="metadataHtml"></div>
                 <div v-else>No metadata</div>
             </div>
         </div>
@@ -221,7 +221,14 @@ const errorLine = ref<number | null>(null);
 const ast = ref<unknown>(null);
 const astHtml = ref('');
 
-const metadata = ref<unknown>(null);
+type OptionalMetadata = {
+    exists: false;
+} | {
+    exists: true;
+    value: unknown;
+};
+
+const metadata = ref<OptionalMetadata>({ exists: false });
 const metadataHtml = ref('');
 
 function parse() {
@@ -235,7 +242,11 @@ function parse() {
             const [ast_, metadata_] = runner.value.parse(code.value);
             logs.value = [];
             ast.value = ast_;
-            metadata.value = metadata_?.get(null) ?? null;
+            if (metadata_?.has(null)) {
+                metadata.value = { exists: true, value: metadata_.get(null) };
+            } else {
+                metadata.value = { exists: false };
+            }
         } catch (err) {
             if (runner.value.isAiScriptError(err)) {
                 logs.value = [{
@@ -252,7 +263,7 @@ function parse() {
                 }
             }
             ast.value = null;
-            metadata.value = null;
+            metadata.value = { exists: false };
         }
     }
 }
@@ -423,12 +434,12 @@ onMounted(async () => {
 
     watch(metadata, async (newMetadata) => {
         if (highlighter) {
-            if (newMetadata == null) {
+            if (!newMetadata.exists) {
                 metadataHtml.value = '';
                 return;
             }
 
-            metadataHtml.value = highlighter.codeToHtml(JSON.stringify(newMetadata, null, 2), {
+            metadataHtml.value = highlighter.codeToHtml(JSON.stringify(newMetadata.value, null, 2), {
                 lang: 'json',
                 themes: {
                     light: 'github-light',
