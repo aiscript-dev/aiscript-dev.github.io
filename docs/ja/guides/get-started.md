@@ -47,8 +47,8 @@ this is a comment
 	<tr><td>文字列</td><td><code>str</code></td><td><code>"kawaii"</code></td></tr>
 	<tr><td>数値</td><td><code>num</code></td><td><code>42</code></td></tr>
 	<tr><td>真理値</td><td><code>bool</code></td><td><code>true</code>/<code>false</code></td></tr>
-	<tr><td>配列</td><td><code>arr</code></td><td><code>["ai" "chan" "cute"]</code></td></tr>
-	<tr><td>オブジェクト</td><td><code>obj</code></td><td><code>{ foo: "bar"; a: 42; }</code></td></tr>
+	<tr><td>配列</td><td><code>arr</code></td><td><code>["ai", "chan", "cute"]</code></td></tr>
+	<tr><td>オブジェクト</td><td><code>obj</code></td><td><code>{ foo: "bar", a: 42 }</code></td></tr>
 	<tr><td>null</td><td><code>null</code></td><td><code>null</code></td></tr>
 	<tr><td>関数</td><td><code>fn</code></td><td><code>@(x) { x }</code></td></tr>
 	<tr><td>エラー</td><td><code>error</code></td><td><code>(TODO)</code></td></tr>
@@ -84,7 +84,7 @@ print(message)
 ```
 
 ## 配列
-`[]`の中に式をスペースで区切って列挙します。
+`[]`の中に式を`,`で区切って列挙します。
 ```aiscript
 ["ai", "chan", "kawaii"]
 ```
@@ -101,7 +101,7 @@ let arr = ["ai", "chan", "kawaii"]
 AiScriptにおけるオブジェクトは文字列のみをキーとした連想配列のようなものとなっています。  
 キーと値から構成される各要素をプロパティと呼びます。  
 この時キーをプロパティ名と呼びます。  
-`{}`の中にプロパティを`,`/`;`/空白で区切って列挙します。
+`{}`の中にプロパティを`,`か改行で区切って列挙します。
 プロパティ名と値は`: `で区切ります。
 ```aiscript
 {
