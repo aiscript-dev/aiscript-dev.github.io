@@ -49,8 +49,8 @@ this is a multi-line comment
 | String      | `str`     | `"kawaii"`                     |
 | Number      | `num`     | `42`                           |
 | Boolean     | `bool`    | `true` / `false`               |
-| Array       | `arr`     | `["ai" "chan" "cute"]`         |
-| Object      | `obj`     | `{ foo: "bar"; a: 42; }`       |
+| Array       | `arr`     | `["ai", "chan", "cute"]`         |
+| Object      | `obj`     | `{ foo: "bar", a: 42 }`       |
 | Null        | `null`    | `null`                         |
 | Function    | `fn`      | `@(x) { x }`                   |
 | Error       | `error`   | *(TODO)*                       |
@@ -92,7 +92,7 @@ print(message)
 
 ## Arrays
 
-Declare arrays by listing expressions within `[]`, separated by spaces:
+Declare arrays by listing expressions within `[]`, separated by `,`:
 
 ```aiscript
 ["ai", "chan", "kawaii"]
@@ -110,7 +110,7 @@ let arr = ["ai", "chan", "kawaii"]
 
 Objects in AiScript are similar to associative arrays with string-only keys. Each element consists of a key and a value, called a **property**. 
 
-Write properties within `{}`, separated by `,`, `;`, or whitespace. Use `:` to separate keys and values:
+Write properties within `{}`, separated by `,` or newlines. Use `:` to separate keys and values:
 
 ```aiscript
 {
