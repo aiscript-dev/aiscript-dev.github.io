@@ -178,7 +178,7 @@ Returns an array of object values.
 #### @Obj:kvs(_v_: obj): arr
 Returns an array of object keys, values, and key/value pairs.
 
-#### @Obj:from_kvs(_kvs_: arr): obj;
+#### @Obj:from_kvs(_kvs_: arr): obj
 Creates an object from key/value pairs. (Available from v1.2.0 or later)
 
 #### @Obj:get&lt;T&gt;(_v_: obj&lt;T&gt;, _key_: str): T
