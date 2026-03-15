@@ -368,7 +368,14 @@ onMounted(async () => {
             code.value = hashData.value.code;
         }
         if (hashData.value.version != null) {
-            version.value = hashData.value.version;
+            const completeVersion = /^(\d+\.\d+)\.\d+$/.exec(hashData.value.version);
+
+            // Backwards compatibility (e.g. 1.2.0 -> 1.2)
+            if (completeVersion != null) {
+                version.value = completeVersion[1];
+            } else if (versionModules.has(hashData.value.version)) {
+                version.value = hashData.value.version;
+            }
         }
     }
 
