@@ -18,7 +18,7 @@
     "aiscript0_19": "npm:@syuilo/aiscript@0.19.0",
     "aiscript1_0": "npm:@syuilo/aiscript@1.0.0",
     "aiscript1_1": "npm:@syuilo/aiscript@1.1.2",
-    "aiscript1_2": "npm:@syuilo/aiscript@1.2.0",
+    "aiscript1_2": "npm:@syuilo/aiscript@1.2.1",
     "lz-string": "^1.5.0",
     "markdown-it-mathjax3": "^4.3.2",
     "shiki": "^3.17.0",

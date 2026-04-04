@@ -42,8 +42,8 @@ importers:
         specifier: npm:@syuilo/aiscript@1.1.2
         version: '@syuilo/aiscript@1.1.2'
       aiscript1_2:
-        specifier: npm:@syuilo/aiscript@1.2.0
-        version: '@syuilo/aiscript@1.2.0'
+        specifier: npm:@syuilo/aiscript@1.2.1
+        version: '@syuilo/aiscript@1.2.1'
       lz-string:
         specifier: ^1.5.0
         version: 1.5.0
@@ -660,8 +660,8 @@ packages:
   '@syuilo/aiscript@1.1.2':
     resolution: {integrity: sha512-cijsHTiMjeECocElyjRIcWMPGDhZIX3YfCOyzI6AZM8ajxRQ2hSqJwEh9pDr4mVTml9kLMHWDHmgfHkTHRJ1sg==}
 
-  '@syuilo/aiscript@1.2.0':
-    resolution: {integrity: sha512-3MkKfqDftqHyouINgHEIHnoTVWEeL0L1o7Y7Y9d8qb5h5vZKphzH/KVG3R2iI6CHtmO1mWHHJx5A499f80H9FA==}
+  '@syuilo/aiscript@1.2.1':
+    resolution: {integrity: sha512-jTW4dFGBJVNfq3kn0+tbtQqcr71sUILZpAs8tV2ZC/zO4y7LsG8hSbIQ9QfRWWWdnNjr5R6EoEoOsC1hGqxu0A==}
 
   '@syuilo/aiscript@1.3.0-dev.20251126':
     resolution: {integrity: sha512-3PB2/oYELKRNnojYbwZSlrLVPPVI9fD48U8iE3cO1aVVgyyobUUph7cFldrbd0/+K0ZEX15W5Df834GoSwzpAg==}
@@ -1805,7 +1805,7 @@ snapshots:
       stringz: 2.1.0
       uuid: 11.1.0
 
-  '@syuilo/aiscript@1.2.0':
+  '@syuilo/aiscript@1.2.1':
     dependencies:
       seedrandom: 3.0.5
       stringz: 2.1.0
